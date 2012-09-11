@@ -1,18 +1,76 @@
 h1. Instructions
 
-Finish as much of this test as possible. You may use the Internet to look up anything you wish. You will be evaluated on your HTML, CSS, and JavaScript code quality. Place your HTML in html/index.html. Other resources should be saved where appropriate.
+h2. Your Task
 
-Based on mockup.jpg, create a two column design utilizing the images and text provided (found in the images and text directories). The text and sprites in the article options bar under the published date/time need to be links. Although not shown in mockup.jpg, place a gradient background on the entire page that goes from #CCCCCC at the top to #FFFFFF at the bottom.
+Using the provided feed data, construct a page that is formatted to match the included mockups. You will only be using one HTML document for this test. Your document will render either a story view or a story list view.
 
-The only interactive element that needs to function is the text size switcher. The story text needs to be 14px when the user first goes the page. Create toggle functionality utilizing jQuery so when the user clicks on "larger type", only the text in the article changes to 16px, the text "larger type" needs to change to "smaller type", and the icon needs to change to the minus. When the user clicks on "smaller type", everything needs to change back to it's original state. You have been given the jquery-1.4.min.js file in the js directory.
+The story view layout should be responsive and render as multi-column (uidevtest/mockup-wide.jpg) for viewports greater than 480 pixels and as single-column (uidevtest/mockup.jpg) below that breakpoint.
 
-h2. Attribute requirements
+Place your HTML in uidevtest/src/html/index.html. All other resources should be saved where appropriate in the uidevtest/src hierarchy.
 
-orange: #CC6600
-black:#202020
-grey: #666666
-fonts: Georgia,"Times New Roman",Times,serif and Arial,"MS Trebuchet",sans-serif
-headline font size: 18px
-article text size: 14px
-photo cutline size: 12px
-page gradient: vertical from #CCCCCC at the top to #FFFFFF at the bottom
+h2. Feed Data
+
+Your page should load data from the provided datafile. No content should be hard-coded into your document.
+
+uidevtest/src/js/uidevtest-data.js
+
+h2. URLs and page rendering
+
+The page should render the story list view (uidevtest/mockup-list.jpg) when accessed by the URL below.
+
+uidevtest/src/html/index.html
+
+The headline links from the story list view should take us to the individual story view. The page should render one of the five stories from the feed data when accessed by the URLs below.
+
+uidevtest/src/html/index.html?story=sto01
+uidevtest/src/html/index.html?story=sto02
+uidevtest/src/html/index.html?story=sto03
+uidevtest/src/html/index.html?story=sto04
+uidevtest/src/html/index.html?story=sto05
+
+h2. Design Attributes
+
+For most visual elements, you are provided with details on styling below. Other visual elements that are not detailed below will require you to use your best judgement to match the mockups provided.
+
+h3. Story list view (all viewport sizes)
+
+- Reference uidevtest/mockup-list.jpg
+- Headline link text is 16px bold, #036dbe
+- Category / categories text is 14px, #444444
+- "Published" / "Updated" information is 14px, #444444
+- Images have a dropshadow and a border applied
+
+h3. Story view layouts (all viewport sizes)
+
+- The social links ("Comment", "Share", "Favorite", and "Vote") have full-color sprite icons (uidevtest/src/images/uidevtest-sprite.png)
+- All typefaces are Arial
+- Breadcrumb is 11px bold, #036dbe
+- Breadcrumb border is #cdcdcd
+- Headline is 24px, #444444
+- "Published" / "Updated" information is 11px, #444444
+- Social links are 11px bold, #036dbe
+- The story text is 14px with 18px line heights, #444444
+- Links are #036dbe
+- The photo caption is 14px with 14px line heights, #444444
+
+h3. Three-column story layout (greater than 480px viewport)
+
+- Reference uidevtest/mockup-wide.jpg
+- Social links should display on the page as grayscale icons. Upon mouse-over (hover), they should display as full-color icons. Upon mouse-out, they should return to grayscale state.
+- The layout is 260px columns with 15px gutters
+- Photo credit is #000000 over a white background
+- Photo credit background is at 60% opacity
+
+h3. Single-column story layout (480px or less viewport)
+
+- Reference uidevtest/mockup.jpg
+- Social links should display as full-color icons. There is no visual change for hover or mouse-over.
+- Photo credit is #898989
+
+h2. Evaluation
+
+You will be evaluated on your HTML, CSS, and JavaScript code quality as well as your attention to detail in completing the code test.
+
+h2. Other Information
+
+You may use any JS libraries that you choose for this task. A local copy of jQuery has been provided.
