@@ -2,7 +2,7 @@
 // All non-responsive css
 
 /***********************
- * 
+ * General
  ***********************/
 body {
   font-family: $sansSerif;
@@ -16,6 +16,10 @@ a, a:visited {
     text-decoration: underline;
   }
 }
+
+/***********************
+Story Listing Styles
+************************/
 #content.story-list {
   width: 600px;
   margin: 0 auto;
@@ -64,4 +68,147 @@ a, a:visited {
   }
 
 
+}
+
+/***********************
+Story View Styles
+************************/
+
+#content.story-view {
+  margin: 15px auto;
+  width: 845px; // (260 * 3) + (15 * 3)
+
+  nav ul {
+    border-top: 2px solid $lightGrey;
+    border-bottom: 2px solid $lightGrey;
+    margin: 0;
+    padding: 4px 0;
+    li {
+      float: left;
+      margin-right: 5px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+  h1, .meta, .story, figcaption { color: $darkGrey; }
+  .meta {
+    font-size: 11px;
+  }
+
+  h1 {
+    margin: 10px 0;
+  }
+  .meta {
+    margin: 10px 0 15px;
+  }
+
+  figure.photo {
+    float: left;
+    width: 260px;
+  }
+
+  figure.photo {
+    .photo-container {
+      position: relative;
+    }
+    img {
+      border: 2px solid #000000;
+    }
+
+    figcaption.credit {
+      background: #ffffff; // All broswers that do not support alpha
+      background: rgba(#ffffff, .6);
+      font-size: 14px;
+      padding: 5px;
+      position: absolute;
+      bottom: 6px;
+      right: -2px;
+    }
+    figcaption.caption {
+      line-height: 14px;
+      margin-top: 10px;
+    }
+  }
+
+  .article-content {
+    float: left;
+    margin-left: 19px; // 4px added for photo border
+    max-width: 600px;
+  }
+  .social {
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+    li {
+      list-style: none;
+      float: left;
+      margin-right: 25px;
+      a, a:visited {
+        text-decoration: underline;
+        display: block;
+        // padding: ;
+        span {
+          display: inline-block;
+          height: 20px;
+          width: 20px;
+          position: relative;
+          top: 5px;
+          margin-right: 3px;
+          background: url(../images/uidevtest-sprites.png) no-repeat;
+          @include filter(grayscale(100%));
+
+        }
+        &.share span {
+          background-position: -20px 0;
+        }
+        &.favorite span {
+          background-position: -40px 0;
+        }
+        &.vote span {
+          background-position: -60px 0;
+        }
+        &:hover span {
+          @include filter(none);
+        }
+      }
+    }
+
+  }
+  address.author {
+    margin-top: 15px;
+    clear: both;
+    font-style: normal;
+  }
+  .story {
+    clear: both;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    // Comment out these 3 lines if you would like to NOT use css3 columns
+    // !!css3-columns-1
+    width: 550px;
+    @include column-width(260px);
+    @include column-gap(15px);
+    .column {
+      p:first-child { margin-top: 0;}
+    }
+  }
+}
+
+// Polyfill classes
+// Uncomment if you'd like to not utilize css3 columns
+// !!css3-columns-2
+// #content.story-view .column,  
+.no-csscolumns #content.story-view .column {
+  float: left;
+  margin-left: 15px;
+  width: 260px;
+  &:first-child {
+    margin-left: 0;
+  }
 }

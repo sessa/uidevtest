@@ -21,6 +21,7 @@ var document   = window.document;
 var history    = window.history;
 var location   = window.location;
 var Mustache   = window.Mustache;
+var Modernizr  = window.Modernizr;
 var moment     = window.moment; // http://momentjs.com/
 var $window   = $(window);
 var $document = $(document);
@@ -46,13 +47,17 @@ var main = CMG.main = {
   init: function() {
     // TODO set article data as main object member for global use
     // TODO create  links, url_path is not what we want here
-    
+    // TODO document title
+
+    // If youd like to remove any css3 column action
+    // search _base.scss for !!css3-columns-1 and !!css3-columns-2
+    // then set this flag to true
+    main.forceNonCssColumns = false;
     main.$content = $('#content');
     main.dataSourceURI = '../js/uidevtest-data.js';
-    main.createStoryList();
+    // main.createStoryList();
 
-    // main.createStoryView();
-
+    main.createStoryView();
   },
 
   createStoryList: function() {
@@ -73,16 +78,24 @@ var main = CMG.main = {
     var html;
     $.getJSON(main.dataSourceURI, function(data) {
       $.each( data.objects, function( index, article )  {
-        if (index == 0) {
+        if (index == 1) {
           main.formatAndAddDates(article, 'pub_date');
           main.formatAndAddDates(article, 'updated');
           main.formatAuthorsArrayForView(article);
+          main.checkCSSColumnSupport(article)
           html = Mustache.render(view, article);
-          $('#content').append(html);
+          $('#content').append(html).addClass('story-view');;
         }
       });
     });
-  }, 
+  },
+  iterateDataFeed: function() {
+    $.getJSON(main.dataSourceURI, function(data) {
+      $.each( data.objects, function( index, article )  {
+
+      });
+    });
+  },
   formatAndAddDates: function(articleObject, key) {
     var memberNameToAdd = 'formatted_' + key;
     articleObject[memberNameToAdd] = moment(articleObject[key]).format('h:mm a dddd, MMM. MM, YYYY');
@@ -113,6 +126,31 @@ var main = CMG.main = {
       articleObject.authors_array.push( {name: articleObject.author[i], last: isLast} );
     }
     console.log(articleObject);
+  },
+  // From what I am aware of there is no way to achieve css columns in 
+  // browsers that dod not support the css3 columns spec
+  
+  // This method users bare bones custom Modernizr css3 columns polyfill
+  
+  // This is by no means ideal since we are solely relying on the
+  // formatting of the content, most likely from a wysiwyg dashboard editor
+  checkCSSColumnSupport: function(articleObject) {
+    if ( !Modernizr.csscolumns || main.forceNonCssColumns ) {
+      // Need root element to traverse
+      var $paragraphs = $('<div>' + articleObject.story + '</div>').find('p');
+      var firstColumn = [];
+      var secondColumn = [];
+      for ( var i = 0; i < $paragraphs.length; i++ ) {
+        // Have we hit half way?
+        if (i / $paragraphs.length  <= .5 ) {
+          firstColumn.push($paragraphs[i]);
+        } else {
+          secondColumn.push($paragraphs[i]);
+        }
+      }
+      // Need a root element again, then remove
+      articleObject.story = $('<div>').append($(firstColumn).clone()).html() + '</div><div class="column">' + $('<div>').append($(secondColumn).clone()).html();
+    }
   }
 };
 
