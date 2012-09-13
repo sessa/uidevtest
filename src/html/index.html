@@ -25,22 +25,18 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="../js/jquery-1.8.0.min.js"><\/script>')</script>
-        <script src="../js/underscore.js"></script>
+        <script src="../js/mustache.js"></script> 
         <script src="../js/moment.js"></script>
         <script src="../js/main.js"></script>
         <script id="story-list" type="text/html">
             <article>
-                <a href="<%= url_path %>" title="<%= title %>"><img src="<%= lead_photo_image_thumb %>" alt="<%= lead_photo_caption %>" /></a>
-                <h2><a href="<%= url_path %>" title="<%= title %>"><%= title %></a></h2>
+                <a href="{{url_path}}" title="{{title}}"><img src="{{lead_photo_image_thumb}}" alt="{{lead_photo_caption}}" /></a>
+                <h2><a href="{{url_path}}" title="{{title}}">{{title}}</a></h2>
                 <ul>
-                    <% _.each(categories_name, function(category, i) { %>
-                        <li>
-                        <%= category %><% if(i != (categories_name.length - 1)) { %> / <% } %>
-                        </li>
-                    <% }); %>
+                    {{#categories_array}}<li>{{name}}</li>{{^last}}/{{/last}}{{/categories_array}}
                 </ul>
-                <p class="posted" pubdate>Posted: <time datetime="<%= pub_date %>"><%= formatted_pub_date %></time></p>
-                <p class="updated">Updated: <time datetime="<%= updated %>"><%= formatted_updated %></time></p>
+                <p class="posted" pubdate>Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></p>
+                <p class="updated">Updated: <time datetime="{{updated}}">{{formatted_updated}}</time></p>
             </article>
         </script>
         <script id="story-view" type="text/html">
@@ -52,15 +48,15 @@
             </nav>
             <article>
                 <header>
-                    <h1><%= title %></h1>
+                    <h1>{{title}}</h1>
                     <div class="meta">
-                        <span class="updated">Updated: <time datetime="<%= updated %>"><%= formatted_updated %></time></span> | <span class="posted">Posted: <time datetime="<%= pub_date %>"><%= formatted_pub_date %></time></span>
+                        <span class="updated">Updated: <time datetime="{{updated}}">{{formatted_updated}}</time></span> | <span class="posted">Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></span>
                     </div>
                 </header>
                 <figure class="photo">
-                    <img src="<%= lead_photo_image_url %>" alt="<%= lead_photo_caption %>">
-                    <figcaption class="credit"><%= lead_photo_credit %></figcaption>
-                    <figcaption class="caption"><%= lead_photo_caption %></figcaption>
+                    <img src="{{lead_photo_image_url}}" alt="{{lead_photo_caption}}">
+                    <figcaption class="credit">{{lead_photo_credit}}</figcaption>
+                    {{#lead_photo_caption}}<figcaption class="caption">{{lead_photo_caption}}</figcaption>{{/lead_photo_caption}}
                 </figure>
                 <ul class="social">
                     <li><a title="Comment" href="index.html#comment" class="comment"></a></li>
@@ -68,12 +64,9 @@
                     <li><a title="Favorite" href="index.html#favorite" class="favorite"></a></li>
                     <li><a title="Vote" href="index.html#vote" class="vote"></a></li>
                 </ul>
-                  <address class="author">By
-                    <% _.each(author, function(author_name, i) { %>
-                        <a rel="author" href="index.html#<%= author_name %>" title="<%= author_name %>"><%= author_name %></a><% if(i != (author.length - 1) && (author.length > 1)) { %>, <% } %>
-                    <% }); %>
-                  </address>
-                <section class="story"><%= story %></section>
+                <address class="author">By {{#authors_array}}<a rel="author" href="index.html#{{name}}" title="{{name}}">{{name}}</a>{{^last}}, {{/last}} {{/authors_array}}
+                </address>
+                <section class="story">{{{story}}}</section>
             </article>
         </script>
     </body>
