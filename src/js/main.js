@@ -45,7 +45,6 @@ var main = CMG.main = {
 
   // initialization
   init: function() {
-    // TODO set article data as main object member for global use
 
     // If youd like to remove any css3 column action
     // search _base.scss for !!css3-columns-1 and !!css3-columns-2
@@ -54,10 +53,14 @@ var main = CMG.main = {
     main.$content = $('#content');
     main.dataSourceURI = '../js/uidevtest-data.js';
     
-
+    // Sort of a dispatcher / controller combo
+    main.dispatch();
+  },
+  dispatch: function() {
     if (main.getParameterByName('story').length) {
       var value = main.getParameterByName('story');
-      var validatedUrl = main.validateParameter(value)
+      var validatedUrl = main.validateParameter(value);
+
       if(validatedUrl) {
         main.createStoryView(validatedUrl[1]);
       } else {
@@ -66,51 +69,58 @@ var main = CMG.main = {
     } else {
       main.createStoryList();
     }
-
   },
-
   createStoryList: function() {
     var view = $('#story-list').html();
     var html;
-    document.title = 'Story Listing'
+    document.title = 'Story Listing';
     $.getJSON(main.dataSourceURI, function(data) {
       $.each( data.objects, function( index, article )  {
 
-        main.formatAndAddDates(article, 'pub_date');
-        main.formatAndAddDates(article, 'updated');
-        main.formatCategoriesArrayForView(article);
-        main.formatUrlQuery(article, index);
-
+        main.formatViewData( article, index ); 
         html = Mustache.render(view, article);
         main.$content.append(html).addClass('story-list');
       });
     });
   },
   createStoryView: function(value) {
-    var storyIndex = ( parseInt(value) ) - 1; // need 0 index for dataFeed Object
+    var storyIndex = ( parseInt(value, 10) ) - 1; // need 0 index for dataFeed Object
     var view = $('#story-view').html();
     var html;
+
     $.getJSON( main.dataSourceURI, function( data ) {
+      var foundStory = false;
       $.each( data.objects, function( index, article )  {
+
         if ( index == storyIndex ) {
           document.title = article.title;
-          main.formatAndAddDates(article, 'pub_date');
-          main.formatAndAddDates(article, 'updated');
-          main.formatAuthorsArrayForView(article);
-          main.checkCSSColumnSupport(article)
+          main.formatViewData( article, index );
+          main.checkCSSColumnSupport( article );
 
           html = Mustache.render(view, article);
-          main.$content.append(html).addClass('story-view');;
+          main.$content.append(html).addClass('story-view');
+          foundStory = true;
+          return;
         }
       });
-    });
-  },  
-  iterateDataFeed: function() {
-    $.getJSON(main.dataSourceURI, function(data) {
-      $.each( data.objects, function( index, article )  {
 
-      });
+      if ( !foundStory ) {
+        window.location = 'index.html';
+      }
+
     });
+  },
+  // Creates standardized view object
+  //
+  // Author and Categories are not necessary in each view
+  // but the benefit of the identical object expectation
+  // outweighs the cost as for now
+  formatViewData: function( articleObject, index ) {
+    main.formatAndAddDates( articleObject, 'pub_date' );
+    main.formatAndAddDates( articleObject, 'updated' );
+    main.formatCategoriesArrayForView( articleObject );
+    main.formatAuthorsArrayForView( articleObject );
+    main.formatUrlQuery( articleObject, index );
   },
   formatUrlQuery: function( articleObject, index ) {
     index++;
@@ -128,7 +138,8 @@ var main = CMG.main = {
   // Given the dataset, mustache.js cannot utilize an inverted
   // section without a flag paramter
   formatCategoriesArrayForView: function( articleObject ) {
-    articleObject.categories_array = []
+    articleObject.categories_array = [];
+
     for ( var i = 0; i < articleObject.categories_name.length; i++ ) {
       var isLast = true;
       if ( articleObject.categories_name.length - 1 != i ) {
@@ -166,7 +177,7 @@ var main = CMG.main = {
       var secondColumn = [];
       for ( var i = 0; i < $paragraphs.length; i++ ) {
         // Have we hit half way?
-        if (i / $paragraphs.length  <= .5 ) {
+        if (i / $paragraphs.length  <= 0.5 ) {
           firstColumn.push($paragraphs[i]);
         } else {
           secondColumn.push($paragraphs[i]);
@@ -179,14 +190,16 @@ var main = CMG.main = {
   // Regex here might not be the most efficient but it has quite a bit of approval
   // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
   getParameterByName: function( name ) {
-    name        = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    // cleaned up this regex a little bit
+    name        = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regexS  = "[\\?&]" + name + "=([^&#]*)";
     var regex   = new RegExp(regexS);
     var results = regex.exec(window.location.search);
-    if(results == null)
+    if(results === null) {
       return "";
-    else
+    } else {
       return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
   },
   // Vailidate and group ugly integer
   validateParameter: function(value) {
