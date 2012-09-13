@@ -581,10 +581,11 @@ Story View Styles
   padding: 4px 0;
 }
 #content.story-view nav ul li {
+  color: #036dbe;
   float: left;
-  margin-right: 5px;
   font-size: 11px;
   font-weight: bold;
+  margin-right: 5px;
   text-transform: uppercase;
 }
 #content.story-view h1, #content.story-view .meta, #content.story-view .story, #content.story-view figcaption {
@@ -599,6 +600,12 @@ Story View Styles
 #content.story-view .meta {
   margin: 10px 0 15px;
 }
+#content.story-view .meta.below {
+  display: block;
+}
+#content.story-view .meta.above {
+  display: none;
+}
 #content.story-view figure.photo {
   float: left;
   width: 260px;
@@ -612,10 +619,10 @@ Story View Styles
 #content.story-view figure.photo figcaption.credit {
   background: #ffffff;
   background: rgba(255, 255, 255, 0.6);
+  bottom: 6px;
   font-size: 14px;
   padding: 5px;
   position: absolute;
-  bottom: 6px;
   right: -2px;
 }
 #content.story-view figure.photo figcaption.caption {
@@ -628,9 +635,14 @@ Story View Styles
   max-width: 600px;
 }
 #content.story-view .social {
+  float: right;
   font-size: 11px;
   font-weight: bold;
+  margin-left: 15px;
   text-transform: uppercase;
+  width: 570px;
+}
+#content.story-view .social ul {
   padding: 0;
   margin: 0;
 }
@@ -678,8 +690,8 @@ Story View Styles
   clear: both;
   font-size: 14px;
   line-height: 18px;
-  margin-top: 15px;
   margin-bottom: 15px;
+  margin-top: 15px;
   width: 550px;
   -webkit-column-width: 260px;
   -moz-column-width: 260px;
@@ -696,6 +708,9 @@ Story View Styles
   margin-top: 0;
 }
 
+/***********************
+Polyfill classes
+************************/
 .no-csscolumns #content.story-view .column {
   float: left;
   margin-left: 15px;
@@ -705,6 +720,77 @@ Story View Styles
   margin-left: 0;
 }
 
+/***********************
+IE Fixes
+************************/
+.lt-ie9 #content.story-view .social {
+  width: 550px;
+}
+.lt-ie9 #content.story-view figure.photo figcaption.credit {
+  bottom: 5px;
+}
+
+@media only screen and (max-width: 480px) {
+  #content {
+    padding: 2.5%;
+  }
+  #content.story-view {
+    width: 95%;
+  }
+  #content.story-view .article-content {
+    float: none;
+    margin: 0;
+    width: 100%;
+  }
+  #content.story-view figure.photo img {
+    border: none;
+  }
+  #content.story-view figure.photo figcaption.credit {
+    color: #898989;
+    float: right;
+    position: static;
+  }
+  #content.story-view figure.photo figcaption.caption {
+    clear: both;
+    margin: 10px 0 15px;
+  }
+  #content.story-view address.author {
+    margin: 25px 0;
+  }
+  #content.story-view .meta.below {
+    display: none;
+  }
+  #content.story-view .meta.above {
+    display: block;
+  }
+  #content.story-view .social {
+    float: none;
+    margin-bottom: 15px;
+    margin-left: 0;
+  }
+  #content.story-view .social ul {
+    float: none;
+  }
+  #content.story-view .social li a span {
+    -webkit-filter: none;
+    -moz-filter: none;
+    filter: none;
+  }
+  #content.story-view .story {
+    float: none;
+    width: 100%;
+    -webkit-column-width: auto;
+    -moz-column-width: auto;
+    -ms-column-width: auto;
+    -o-column-width: auto;
+    column-width: auto;
+    -webkit-column-gap: auto;
+    -moz-column-gap: auto;
+    -ms-column-gap: auto;
+    -o-column-gap: auto;
+    column-gap: auto;
+  }
+}
 @media print {
   * {
     background: transparent !important;

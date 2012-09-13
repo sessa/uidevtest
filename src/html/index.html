@@ -52,24 +52,29 @@
             </nav>
             <article>
                 <header>
+                    <div class="meta above">
+                        <span class="updated">Updated: <time datetime="{{updated}}">{{formatted_updated}}</time></span> | <span class="posted">Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></span>
+                    </div>
                     <h1>{{title}}</h1>
-                    <div class="meta">
+                    <div class="meta below">
                         <span class="updated">Updated: <time datetime="{{updated}}">{{formatted_updated}}</time></span> | <span class="posted">Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></span>
                     </div>
                 </header>
-                <figure class="column photo">
-                    <div class="photo-container">
-                        <img src="{{lead_photo_image_url}}" alt="{{lead_photo_caption}}"><figcaption class="credit">{{lead_photo_credit}}</figcaption>
-                    </div>
-                    {{#lead_photo_caption}}<figcaption class="caption">{{lead_photo_caption}}</figcaption>{{/lead_photo_caption}}
-                </figure>
-                <div class="article-content">
-                    <ul class="social clearfix">
+                <div class="social">
+                    <ul class="clearfix">
                         <li><a title="Comment" href="index.html#comment" class="comment"><span></span>Comment</a></li>
                         <li><a title="Share" href="index.html#share" class="share"><span></span>Share</a></li>
                         <li><a title="Favorite" href="index.html#favorite" class="favorite"><span></span>Favorite</a></li>
                         <li><a title="Vote" href="index.html#vote" class="vote"><span></span>Vote</a></li>
                     </ul>
+                </div>
+                <figure class="column photo">
+                    <div class="photo-container clearfix">
+                        <img src="{{lead_photo_image_url}}" alt="{{lead_photo_caption}}"><figcaption class="credit">{{lead_photo_credit}}</figcaption>
+                    </div>
+                    {{#lead_photo_caption}}<figcaption class="caption">{{lead_photo_caption}}</figcaption>{{/lead_photo_caption}}
+                </figure>
+                <div class="article-content">
                     <address class="author">By {{#authors_array}}<a rel="author" href="index.html#{{name}}" title="{{name}}">{{name}}</a>{{^last}}, {{/last}} {{/authors_array}}
                     </address>
                     <section class="story"><div class="column">{{{story}}}</div></section>

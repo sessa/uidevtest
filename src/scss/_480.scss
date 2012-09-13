@@ -1,0 +1,55 @@
+#content {
+  // margin: 20px;
+  padding: 2.5%;
+  &.story-view {
+    width: 95%;
+    .article-content {
+      float: none;
+      margin: 0;
+      width: 100%;
+    }
+    figure.photo {
+      img {
+        border: none;
+      }
+      figcaption.credit {
+        color: #898989;
+        float: right;
+        position: static;
+      }
+      figcaption.caption {
+        clear: both;
+        margin: 10px 0 15px;
+      }
+    }
+    address.author {
+      margin: 25px 0;
+    }
+    .meta {
+      &.below {
+        display: none;
+      }
+      &.above {
+        display: block;
+      }
+    }
+    .social {
+      float: none;
+      ul {
+        float: none;
+      }
+      li a span {
+        @include filter(none);
+      }
+      margin-bottom: 15px;
+      margin-left: 0;
+    }
+    .story {
+      float: none;
+      width: 100%;
+      @include column-width(auto);
+      @include column-gap(auto);
+
+    }
+  }
+}

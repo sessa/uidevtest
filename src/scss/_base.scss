@@ -84,10 +84,11 @@ Story View Styles
     margin: 0;
     padding: 4px 0;
     li {
+      color: $blue;
       float: left;
-      margin-right: 5px;
       font-size: 11px;
       font-weight: bold;
+      margin-right: 5px;
       text-transform: uppercase;
     }
   }
@@ -101,6 +102,12 @@ Story View Styles
   }
   .meta {
     margin: 10px 0 15px;
+    &.below {
+      display: block;
+    }
+    &.above {
+      display: none;
+    }
   }
 
   figure.photo {
@@ -119,10 +126,10 @@ Story View Styles
     figcaption.credit {
       background: #ffffff; // All broswers that do not support alpha
       background: rgba(#ffffff, .6);
+      bottom: 6px;
       font-size: 14px;
       padding: 5px;
       position: absolute;
-      bottom: 6px;
       right: -2px;
     }
     figcaption.caption {
@@ -137,11 +144,16 @@ Story View Styles
     max-width: 600px;
   }
   .social {
+    float: right;
     font-size: 11px;
     font-weight: bold;
+    margin-left: 15px;
     text-transform: uppercase;
-    padding: 0;
-    margin: 0;
+    width: 570px;
+    ul {
+      padding: 0;
+      margin: 0;
+    }
     li {
       list-style: none;
       float: left;
@@ -186,8 +198,8 @@ Story View Styles
     clear: both;
     font-size: 14px;
     line-height: 18px;
-    margin-top: 15px;
     margin-bottom: 15px;
+    margin-top: 15px;
 
     // Comment out these 3 lines if you would like to NOT use css3 columns
     // !!css3-columns-1
@@ -200,7 +212,9 @@ Story View Styles
   }
 }
 
-// Polyfill classes
+/***********************
+Polyfill classes
+************************/
 // Uncomment if you'd like to not utilize css3 columns
 // !!css3-columns-2
 // #content.story-view .column,  
@@ -210,5 +224,19 @@ Story View Styles
   width: 260px;
   &:first-child {
     margin-left: 0;
+  }
+}
+
+/***********************
+IE Fixes
+************************/
+.lt-ie9 {
+  #content.story-view {
+    .social {
+      width: 550px;
+    }
+    figure.photo figcaption.credit {
+      bottom: 5px;
+    }
   }
 }
