@@ -431,6 +431,73 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+/*********************
+CLEARFIXIN'
+*********************/
+/* Contain floats: nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix {
+  zoom: 1; }
+  .clearfix:before, .clearfix:after {
+    content: "";
+    display: table; }
+  .clearfix:after {
+    clear: both; }
+
+/***********************
+ * 
+ ***********************/
+body {
+  font-family: Arial, sans-serif; }
+
+a, a:visited {
+  color: #036dbe;
+  text-decoration: none; }
+  a:hover, a:visited:hover {
+    text-decoration: underline; }
+
+#content.story-list {
+  width: 600px;
+  margin: 0 auto; }
+  #content.story-list article {
+    clear: both;
+    margin: 20px; }
+  #content.story-list .image {
+    float: left; }
+    #content.story-list .image img {
+      border: 3px solid #ffffff;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px 0 rgba(68, 68, 68, 0.5);
+      -moz-box-shadow: 2px 2px 5px 0 rgba(68, 68, 68, 0.5);
+      box-shadow: 2px 2px 5px 0 rgba(68, 68, 68, 0.5); }
+  #content.story-list .information {
+    margin-left: 10px;
+    float: left; }
+  #content.story-list h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 5px; }
+  #content.story-list ul.categories {
+    margin: 0;
+    padding: 0; }
+    #content.story-list ul.categories li {
+      color: #444444;
+      display: inline-block;
+      margin: 0 5px;
+      font-size: 14px; }
+      #content.story-list ul.categories li:first-child {
+        margin-left: 0; }
+  #content.story-list .article-times {
+    color: #444444;
+    font-size: 14px;
+    margin-top: 20px; }
+    #content.story-list .article-times p {
+      margin: 0; }
+
 @media print {
   * {
     background: transparent !important;

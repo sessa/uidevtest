@@ -45,12 +45,13 @@ var main = CMG.main = {
   // initialization
   init: function() {
     // TODO set article data as main object member for global use
-
+    // TODO create  links, url_path is not what we want here
+    
     main.$content = $('#content');
     main.dataSourceURI = '../js/uidevtest-data.js';
-    // main.createStoryList();
+    main.createStoryList();
 
-    main.createStoryView();
+    // main.createStoryView();
 
   },
 

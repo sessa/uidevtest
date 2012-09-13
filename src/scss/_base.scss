@@ -1,0 +1,67 @@
+// Anthony Sessa
+// All non-responsive css
+
+/***********************
+ * 
+ ***********************/
+body {
+  font-family: $sansSerif;
+}
+
+a, a:visited {
+  color: $blue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+#content.story-list {
+  width: 600px;
+  margin: 0 auto;
+  article { 
+    clear: both; 
+    margin: 20px;
+  }
+
+  .image {
+    float: left;
+    img {
+      border: 3px solid #ffffff;
+      @include border-radius(2px);
+      @include box-shadow(2px 2px 5px 0 rgba($darkGrey, .5));
+    }
+  }
+  .information {
+    margin-left: 10px;
+    float: left;
+  }
+  h2 { 
+    font-size: 16px; 
+    font-weight: bold;
+    margin: 0;
+    margin-top: 5px;
+  }
+  ul.categories {
+    margin: 0;
+    padding: 0;
+    li {
+      color: $darkGrey;
+      display: inline-block;
+      margin: 0 5px;
+      font-size: 14px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .article-times {
+    color: $darkGrey;
+    font-size: 14px;
+    margin-top: 20px;
+    p { margin: 0; }
+  }
+
+
+}

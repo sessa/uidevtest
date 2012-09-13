@@ -29,14 +29,18 @@
         <script src="../js/moment.js"></script>
         <script src="../js/main.js"></script>
         <script id="story-list" type="text/html">
-            <article>
-                <a href="{{url_path}}" title="{{title}}"><img src="{{lead_photo_image_thumb}}" alt="{{lead_photo_caption}}" /></a>
-                <h2><a href="{{url_path}}" title="{{title}}">{{title}}</a></h2>
-                <ul>
-                    {{#categories_array}}<li>{{name}}</li>{{^last}}/{{/last}}{{/categories_array}}
-                </ul>
-                <p class="posted" pubdate>Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></p>
-                <p class="updated">Updated: <time datetime="{{updated}}">{{formatted_updated}}</time></p>
+            <article class="clearfix">
+                <a class="image" href="{{url_path}}" title="{{title}}"><img src="{{lead_photo_image_thumb}}" alt="{{lead_photo_caption}}" /></a>
+                <div class="information">
+                    <h2><a href="{{url_path}}" title="{{title}}">{{title}}</a></h2>
+                    <ul class="categories">
+                        {{#categories_array}}<li>{{name}}</li>{{^last}}/{{/last}}{{/categories_array}}
+                    </ul>
+                    <div class="article-times">
+                        <p class="posted" pubdate>Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></p>
+                        <p class="updated">Updated: <time datetime="{{updated}}">{{formatted_updated}}</time></p>
+                    </div>
+                </div>
             </article>
         </script>
         <script id="story-view" type="text/html">
