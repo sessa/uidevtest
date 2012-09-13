@@ -50,15 +50,15 @@ var main = CMG.main = {
     // search _base.scss for !!css3-columns-1 and !!css3-columns-2
     // then set this flag to true
     main.forceNonCssColumns = false;
-    main.$content = $('#content');
-    main.dataSourceURI = '../js/uidevtest-data.js';
+    main.$content           = $('#content');
+    main.dataSourceURI      = '../js/uidevtest-data.js';
     
     // Sort of a dispatcher / controller combo
     main.dispatch();
   },
   dispatch: function() {
     if (main.getParameterByName('story').length) {
-      var value = main.getParameterByName('story');
+      var value        = main.getParameterByName('story');
       var validatedUrl = main.validateParameter(value);
 
       if(validatedUrl) {
@@ -72,9 +72,11 @@ var main = CMG.main = {
   },
   createStoryList: function() {
     var view = $('#story-list').html();
-    var html;
     document.title = 'Story Listing';
+
     $.getJSON(main.dataSourceURI, function(data) {
+
+      var html;
       $.each( data.objects, function( index, article )  {
 
         main.formatViewData( article, index ); 
@@ -86,10 +88,11 @@ var main = CMG.main = {
   createStoryView: function(value) {
     var storyIndex = ( parseInt(value, 10) ) - 1; // need 0 index for dataFeed Object
     var view = $('#story-view').html();
-    var html;
+    
 
     $.getJSON( main.dataSourceURI, function( data ) {
       var foundStory = false;
+      var html;
       $.each( data.objects, function( index, article )  {
 
         if ( index == storyIndex ) {
@@ -189,6 +192,7 @@ var main = CMG.main = {
   },
   // Regex here might not be the most efficient but it has quite a bit of approval
   // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+  // Slightly cleaned up
   getParameterByName: function( name ) {
     // cleaned up this regex a little bit
     name        = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
