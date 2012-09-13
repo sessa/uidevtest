@@ -514,18 +514,20 @@ a:hover, a:visited:hover {
 Story Listing Styles
 ************************/
 #content.story-list {
-  width: 600px;
+  width: 640px;
   margin: 0 auto;
 }
 #content.story-list article {
   clear: both;
   margin: 20px;
 }
-#content.story-list .image {
+#content.story-list a.image {
   float: left;
 }
-#content.story-list .image img {
+#content.story-list a.image img {
   border: 3px solid #ffffff;
+  height: 105px;
+  width: 136px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -535,6 +537,9 @@ Story Listing Styles
   -moz-box-shadow: 2px 2px 5px 0 rgba(68, 68, 68, 0.5);
   box-shadow: 2px 2px 5px 0 rgba(68, 68, 68, 0.5);
 }
+#content.story-list a.image:hover img {
+  border-color: #036dbe;
+}
 #content.story-list .information {
   margin-left: 10px;
   float: left;
@@ -543,7 +548,7 @@ Story Listing Styles
   font-size: 16px;
   font-weight: bold;
   margin: 0;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 #content.story-list ul.categories {
   margin: 0;
@@ -551,12 +556,12 @@ Story Listing Styles
 }
 #content.story-list ul.categories li {
   color: #444444;
-  display: inline-block;
-  margin: 0 5px;
+  float: left;
   font-size: 14px;
+  list-style: none;
 }
-#content.story-list ul.categories li:first-child {
-  margin-left: 0;
+#content.story-list ul.categories li .sep {
+  margin: 0 5px;
 }
 #content.story-list .article-times {
   color: #444444;
@@ -683,6 +688,7 @@ Story View Styles
 }
 #content.story-view address.author {
   margin-top: 15px;
+  font-size: 14px;
   clear: both;
   font-style: normal;
 }

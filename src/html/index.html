@@ -30,11 +30,11 @@
         <script src="../js/main.js"></script>
         <script id="story-list" type="text/html">
             <article class="clearfix">
-                <a class="image" href="{{url_path}}" title="{{title}}"><img src="{{lead_photo_image_thumb}}" alt="{{lead_photo_caption}}" /></a>
+                <a class="image" href="index.html?story={{url_query}}" title="{{title}}"><img src="{{lead_photo_image_thumb}}" alt="{{lead_photo_caption}}" /></a>
                 <div class="information">
-                    <h2><a href="{{url_path}}" title="{{title}}">{{title}}</a></h2>
-                    <ul class="categories">
-                        {{#categories_array}}<li>{{name}}</li>{{^last}}/{{/last}}{{/categories_array}}
+                    <h2><a href="index.html?story={{url_query}}" title="{{title}}">{{title}}</a></h2>
+                    <ul class="categories clearfix">
+                        {{#categories_array}}<li>{{name}}{{^last}}<span class="sep">/</span>{{/last}}</li>{{/categories_array}}
                     </ul>
                     <div class="article-times">
                         <p class="posted" pubdate>Posted: <time datetime="{{pub_date}}">{{formatted_pub_date}}</time></p>

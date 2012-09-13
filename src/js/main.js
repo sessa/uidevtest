@@ -46,8 +46,6 @@ var main = CMG.main = {
   // initialization
   init: function() {
     // TODO set article data as main object member for global use
-    // TODO create  links, url_path is not what we want here
-    // TODO document title
 
     // If youd like to remove any css3 column action
     // search _base.scss for !!css3-columns-1 and !!css3-columns-2
@@ -55,40 +53,58 @@ var main = CMG.main = {
     main.forceNonCssColumns = false;
     main.$content = $('#content');
     main.dataSourceURI = '../js/uidevtest-data.js';
-    // main.createStoryList();
+    
 
-    main.createStoryView();
+    if (main.getParameterByName('story').length) {
+      var value = main.getParameterByName('story');
+      var validatedUrl = main.validateParameter(value)
+      if(validatedUrl) {
+        main.createStoryView(validatedUrl[1]);
+      } else {
+        window.location = 'index.html';
+      }
+    } else {
+      main.createStoryList();
+    }
+
   },
 
   createStoryList: function() {
     var view = $('#story-list').html();
     var html;
+    document.title = 'Story Listing'
     $.getJSON(main.dataSourceURI, function(data) {
       $.each( data.objects, function( index, article )  {
+
         main.formatAndAddDates(article, 'pub_date');
         main.formatAndAddDates(article, 'updated');
         main.formatCategoriesArrayForView(article);
+        main.formatUrlQuery(article, index);
+
         html = Mustache.render(view, article);
         main.$content.append(html).addClass('story-list');
       });
     });
   },
-  createStoryView: function() {
+  createStoryView: function(value) {
+    var storyIndex = ( parseInt(value) ) - 1; // need 0 index for dataFeed Object
     var view = $('#story-view').html();
     var html;
-    $.getJSON(main.dataSourceURI, function(data) {
+    $.getJSON( main.dataSourceURI, function( data ) {
       $.each( data.objects, function( index, article )  {
-        if (index == 1) {
+        if ( index == storyIndex ) {
+          document.title = article.title;
           main.formatAndAddDates(article, 'pub_date');
           main.formatAndAddDates(article, 'updated');
           main.formatAuthorsArrayForView(article);
           main.checkCSSColumnSupport(article)
+
           html = Mustache.render(view, article);
-          $('#content').append(html).addClass('story-view');;
+          main.$content.append(html).addClass('story-view');;
         }
       });
     });
-  },
+  },  
   iterateDataFeed: function() {
     $.getJSON(main.dataSourceURI, function(data) {
       $.each( data.objects, function( index, article )  {
@@ -96,7 +112,14 @@ var main = CMG.main = {
       });
     });
   },
-  formatAndAddDates: function(articleObject, key) {
+  formatUrlQuery: function( articleObject, index ) {
+    index++;
+    if ( index < 10 ) {
+      index = '0' + index;
+    }
+    articleObject.url_query = 'sto' + index;
+  },
+  formatAndAddDates: function( articleObject, key ) {
     var memberNameToAdd = 'formatted_' + key;
     articleObject[memberNameToAdd] = moment(articleObject[key]).format('h:mm a dddd, MMM. MM, YYYY');
   },
@@ -104,7 +127,7 @@ var main = CMG.main = {
   // the use of inverted sections via mustache.js.
   // Given the dataset, mustache.js cannot utilize an inverted
   // section without a flag paramter
-  formatCategoriesArrayForView: function(articleObject) {
+  formatCategoriesArrayForView: function( articleObject ) {
     articleObject.categories_array = []
     for ( var i = 0; i < articleObject.categories_name.length; i++ ) {
       var isLast = true;
@@ -116,8 +139,9 @@ var main = CMG.main = {
   },
   // Even though there is only 1 author per article, it is being served as
   // an array - therefore conversion into flagged object for inverted selections
-  formatAuthorsArrayForView: function(articleObject) {
-    articleObject.authors_array = []
+  formatAuthorsArrayForView: function( articleObject ) {
+    articleObject.authors_array = [];
+
     for ( var i = 0; i < articleObject.author.length; i++ ) {
       var isLast = true;
       if ( articleObject.author.length - 1 != i ) {
@@ -125,7 +149,6 @@ var main = CMG.main = {
       }
       articleObject.authors_array.push( {name: articleObject.author[i], last: isLast} );
     }
-    console.log(articleObject);
   },
   // From what I am aware of there is no way to achieve css columns in 
   // browsers that dod not support the css3 columns spec
@@ -134,8 +157,9 @@ var main = CMG.main = {
   
   // This is by no means ideal since we are solely relying on the
   // formatting of the content, most likely from a wysiwyg dashboard editor
-  checkCSSColumnSupport: function(articleObject) {
+  checkCSSColumnSupport: function( articleObject ) {
     if ( !Modernizr.csscolumns || main.forceNonCssColumns ) {
+
       // Need root element to traverse
       var $paragraphs = $('<div>' + articleObject.story + '</div>').find('p');
       var firstColumn = [];
@@ -151,6 +175,24 @@ var main = CMG.main = {
       // Need a root element again, then remove
       articleObject.story = $('<div>').append($(firstColumn).clone()).html() + '</div><div class="column">' + $('<div>').append($(secondColumn).clone()).html();
     }
+  },
+  // Regex here might not be the most efficient but it has quite a bit of approval
+  // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+  getParameterByName: function( name ) {
+    name        = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS  = "[\\?&]" + name + "=([^&#]*)";
+    var regex   = new RegExp(regexS);
+    var results = regex.exec(window.location.search);
+    if(results == null)
+      return "";
+    else
+      return decodeURIComponent(results[1].replace(/\+/g, " "));
+  },
+  // Vailidate and group ugly integer
+  validateParameter: function(value) {
+    var regexS = '^sto([0-9]{1,3})';
+    var regex  = new RegExp(regexS);
+    return regex.exec(value);
   }
 };
 

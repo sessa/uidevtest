@@ -21,20 +21,23 @@ a, a:visited {
 Story Listing Styles
 ************************/
 #content.story-list {
-  width: 600px;
+  width: 640px;
   margin: 0 auto;
   article { 
     clear: both; 
     margin: 20px;
   }
 
-  .image {
+  a.image {
     float: left;
     img {
       border: 3px solid #ffffff;
+      height: 105px;
+      width: 136px;
       @include border-radius(2px);
       @include box-shadow(2px 2px 5px 0 rgba($darkGrey, .5));
     }
+    &:hover img { border-color: $blue; }
   }
   .information {
     margin-left: 10px;
@@ -44,19 +47,18 @@ Story Listing Styles
     font-size: 16px; 
     font-weight: bold;
     margin: 0;
-    margin-top: 5px;
+    margin-top: 10px;
   }
   ul.categories {
     margin: 0;
     padding: 0;
     li {
       color: $darkGrey;
-      display: inline-block;
-      margin: 0 5px;
+      float: left;
+      // margin: 0 5px;
       font-size: 14px;
-      &:first-child {
-        margin-left: 0;
-      }
+      list-style: none;
+      .sep { margin: 0 5px; }
     }
   }
 
@@ -191,6 +193,7 @@ Story View Styles
   }
   address.author {
     margin-top: 15px;
+    font-size: 14px;
     clear: both;
     font-style: normal;
   }
