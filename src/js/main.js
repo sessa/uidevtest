@@ -2,7 +2,8 @@
  * Anthony Sessa | main
  * 
  * I generally use this implementation for all javascript development
- * It is quite a bit of overkill for this task.
+ * It is quite a bit of overkill for this task but I thought I might show
+ * you how I work on larger scale projects
  */
 
 /*jshint asi: false, browser: true, curly: true, devel: true, eqeqeq: false, forin: false, newcap: true, noempty: true, strict: true, undef: true */
@@ -20,9 +21,6 @@ var document   = window.document;
 var history    = window.history;
 var location   = window.location;
 var moment     = window.moment; // http://momentjs.com/
-// var Mustache  = window.Mustache;
-// var Underscore  = window.Underscore;
-// var Modernizr = window.Modernizr;
 var $window   = $(window);
 var $document = $(document);
 
@@ -45,17 +43,44 @@ var main = CMG.main = {
 
   // initialization
   init: function() {
-    $.getJSON('../js/uidevtest-data.js', function(data) {
-      var view = $('#story-list').html();
+    main.$content = $('#content');
+    main.dataSourceURI = '../js/uidevtest-data.js';
+    // main.createStoryList();
 
+    main.createStoryView();
+
+  },
+
+  createStoryList: function() {
+    var view = $('#story-list').html();
+    var html;
+    console.log(main.dataSourceURI);
+    $.getJSON(main.dataSourceURI, function(data) {
       $.each( data.objects, function( index, article )  {
-        article.formatted_pub_date = moment(article.pub_date).format('h:mm a dddd, MMM. MM, YYYY');
-        article.formatted_updated = moment(article.updated).format('h:mm a dddd, MMM. MM, YYYY');
+        main.formatAndAddDates(article, 'pub_date');
+        main.formatAndAddDates(article, 'updated');
         html = underscore.template(view, article);
-        $('#content').append(html);
+        main.$content.append(html);
       });
-
     });
+  },
+  createStoryView: function() {
+    var view = $('#story-view').html();
+    var html;
+    $.getJSON(main.dataSourceURI, function(data) {
+      $.each( data.objects, function( index, article )  {
+        if (index == 0) {
+          main.formatAndAddDates(article, 'pub_date');
+          main.formatAndAddDates(article, 'updated');
+          html = underscore.template(view, article);
+          $('#content').append(html);
+        }
+      });
+    });
+  }, 
+  formatAndAddDates: function(articleObject, key) {
+    var memberNameToAdd = 'formatted_' + key;
+    articleObject[memberNameToAdd] = moment(articleObject[key]).format('h:mm a dddd, MMM. MM, YYYY');
   }
 };
 
