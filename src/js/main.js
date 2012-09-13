@@ -52,8 +52,6 @@ var main = CMG.main = {
     main.forceNonCssColumns = false;
     main.$content           = $('#content');
     main.dataSourceURI      = '../js/uidevtest-data.js';
-
-    console.log(Modernizr);
     
     // Sort of a dispatcher / controller combo
     main.dispatch();
