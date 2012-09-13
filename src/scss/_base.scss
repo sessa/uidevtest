@@ -21,7 +21,7 @@ a, a:visited {
 Story Listing Styles
 ************************/
 #content.story-list {
-  width: 640px;
+  width: 650px;
   margin: 0 auto;
   article { 
     clear: both; 
@@ -172,7 +172,12 @@ Story View Styles
           top: 5px;
           margin-right: 3px;
           background: url(../images/uidevtest-sprites.png) no-repeat;
+
+          // http://stackoverflow.com/questions/609273/convert-an-image-to-grayscale-in-html-css
+          filter: url(../images/filters.svg#grayscale);
+          filter: gray;
           @include filter(grayscale(100%));
+
 
         }
         &.share span {

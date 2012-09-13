@@ -52,6 +52,8 @@ var main = CMG.main = {
     main.forceNonCssColumns = false;
     main.$content           = $('#content');
     main.dataSourceURI      = '../js/uidevtest-data.js';
+
+    console.log(Modernizr);
     
     // Sort of a dispatcher / controller combo
     main.dispatch();
@@ -98,7 +100,7 @@ var main = CMG.main = {
         if ( index == storyIndex ) {
           document.title = article.title;
           main.formatViewData( article, index );
-          main.checkCSSColumnSupport( article );
+          main.addColumnSupport( article );
 
           html = Mustache.render(view, article);
           main.$content.append(html).addClass('story-view');
@@ -171,7 +173,7 @@ var main = CMG.main = {
   
   // This is by no means ideal since we are solely relying on the
   // formatting of the content, most likely from a wysiwyg dashboard editor
-  checkCSSColumnSupport: function( articleObject ) {
+  addColumnSupport: function( articleObject ) {
     if ( !Modernizr.csscolumns || main.forceNonCssColumns ) {
 
       // Need root element to traverse

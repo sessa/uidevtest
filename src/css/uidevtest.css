@@ -514,7 +514,7 @@ a:hover, a:visited:hover {
 Story Listing Styles
 ************************/
 #content.story-list {
-  width: 640px;
+  width: 650px;
   margin: 0 auto;
 }
 #content.story-list article {
@@ -668,6 +668,8 @@ Story View Styles
   top: 5px;
   margin-right: 3px;
   background: url(../images/uidevtest-sprites.png) no-repeat;
+  filter: url(../images/filters.svg#grayscale);
+  filter: gray;
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   filter: grayscale(100%);
